@@ -77,9 +77,9 @@ class RocketChatDesktopRelease(RocketChatAppRelease):
         output = RocketChatDesktopRelease(rel.tag_name)
         release_assets = rel.get_assets()
         output.releases = {
-            'msi': next({'filename': i.name, 'url': i.browser_download_url} for i in release_assets if i.name.endswith(".msi")),
-            'pkg': next({'filename': i.name, 'url': i.browser_download_url} for i in release_assets if i.name.endswith(".pkg")),
-            'deb': next({'filename': i.name, 'url': i.browser_download_url} for i in release_assets if i.name.endswith(".deb"))
+            'msi': next({'filename': i.name, 'url': i.browser_download_url} for i in release_assets if i.name.endswith("win-x64.msi")),
+            'pkg': next({'filename': i.name, 'url': i.browser_download_url} for i in release_assets if i.name.endswith("mac.pkg")),
+            'deb': next({'filename': i.name, 'url': i.browser_download_url} for i in release_assets if i.name.endswith("amd64.deb"))
         }
         output.published_date = rel.published_at
         return output

@@ -13,7 +13,7 @@ from typing import Union
 from os import makedirs
 from pathlib import Path
 
-from requests import get
+from requests import get, RequestException
 from time import sleep
 from config import config
 from urllib.parse import urljoin, quote
@@ -25,8 +25,10 @@ from github import GithubException
 from os import system
 import logging
 
-
-logging.basicConfig(filename=config["log_file"], encoding='utf-8', level=logging.INFO)
+if config["log_file"]:
+    logging.basicConfig(filename=config["log_file"], encoding='utf-8', level=logging.INFO)
+else:
+    logging.basicConfig(level=logging.INFO)
 
 
 # direct download a url to a specific file location
@@ -59,9 +61,16 @@ def loop_check_and_download():
                         makedirs(absolute_folder_location, exist_ok=True)
                         absolute_file_location = absolute_folder_location.joinpath(current_asset_file['filename'])
                         logging.info(f"开始下载{absolute_file_location}")
-                        # 使用代理 https://ghproxy.com/
-                        direct_download(absolute_file_location, "https://ghproxy.com/" + current_asset_file['url'])
-                        logging.info("下载完成")
+                        while True:
+                            try:
+                                # 使用代理 https://ghproxy.com/
+                                direct_download(absolute_file_location, current_asset_file['url'])
+                                logging.info("下载完成")
+                                break
+                            except RequestException as re:
+                                logging.error("下载失败")
+                                logging.exception(re)
+                                sleep(60)
                         current_asset_file['download_url'] = quote(urljoin(relative_base_download_url+"/", current_asset_file['filename']))
                 current_versions.update(check_result)
                 logging.info("更新页面")
