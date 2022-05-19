@@ -57,7 +57,8 @@ def loop_check_and_download():
                         makedirs(absolute_folder_location, exist_ok=True)
                         absolute_file_location = absolute_folder_location.joinpath(current_asset_file['filename'])
                         logging.info(f"开始下载{absolute_file_location}")
-                        direct_download(absolute_file_location, current_asset_file['url'])
+                        # 使用代理 https://ghproxy.com/
+                        direct_download(absolute_file_location, "https://ghproxy.com/" + current_asset_file['url'])
                         logging.info("下载完成")
                         current_asset_file['download_url'] = quote(urljoin(relative_base_download_url+"/", current_asset_file['filename']))
                 current_versions.update(check_result)
