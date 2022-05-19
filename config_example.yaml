@@ -1,0 +1,10 @@
+github_access_token: "ghp_thisisgithubaccesstoken"
+current_versions:
+  mobile:   0.0.0
+  desktop:  0.0.0
+www:
+  nerchat_webroot: /home/www/webroot
+  download: download
+  page:     index.html
+log_file: download_nerchat.log
+timeout_s: 3600
