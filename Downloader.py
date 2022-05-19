@@ -22,7 +22,9 @@ from FindVersion import get_config_version, check_new_version, RocketChatDesktop
     FileAndURL
 from Renderer import render_and_save
 from github import GithubException
+from os import system
 import logging
+
 
 logging.basicConfig(filename=config["log_file"], encoding='utf-8', level=logging.INFO)
 
@@ -64,6 +66,8 @@ def loop_check_and_download():
                 current_versions.update(check_result)
                 logging.info("更新页面")
                 render_and_save(current_versions)
+                if config["after_download"]:
+                    system(config["after_download"])
         except GithubException as ge:
             logging.exception(ge)
         sleep(config['timeout_s'])

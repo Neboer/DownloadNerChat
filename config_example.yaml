@@ -8,3 +8,4 @@ www:
   page:     index.html
 log_file: download_nerchat.log
 timeout_s: 3600
+after_download: "sudo restart_nginx.sh"
