@@ -3,3 +3,4 @@ html_example
 /wwwroot/
 download_nerchat.log
 .idea
+__pycache__
