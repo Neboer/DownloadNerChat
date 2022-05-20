@@ -6,6 +6,11 @@ www:
   nerchat_webroot: /home/www/webroot
   download: download
   page:     index.html
+aria2:
+  host: http://localhost
+  port: 6800
+  secret: ""
+  https-proxy: ""
 log_file: download_nerchat.log
 timeout_s: 3600
 after_download: "sudo restart_nginx.sh"
